@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Michael Wagner
+ * Copyright 2016 Michael Wagner
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,10 @@
     font-style: italic;
     font-size: 0.7em
 }
-#einzug {
-    padding-left: 1em
+#wStoff {
+    padding-left: 1em;
+    background-color: #fff;
 }
-
+#wDosis, #wEinheit {
+    background-color: #fff;
+}

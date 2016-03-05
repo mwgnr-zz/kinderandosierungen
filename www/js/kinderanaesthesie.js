@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Michael Wagner
+ * Copyright 2016 Michael Wagner
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ var phasen = {
         "Sufentanil": [0.5, 1, "µg"],
         },
     "Aufrechterhaltung": {
+        "Flüssigkeitsbedarf": ["X", "X", "ml/h"],
         "Propofol-P": [5, 10, "mg/h"],
         "Remifentanil-P": [0.2, 0.3, "µg/min"],
         },
@@ -68,19 +69,35 @@ $(document).ready(function(){
             $("#formGewicht").append('<label for="sliderAlter">Gewicht berechnen (Alter in Jahren):</label><input type="range" name="sliderAlter" id="sliderAlter" data-highlight="true" min="1" max="10" value="6">');
         } else {
             $("#formGewicht").append('<label for="sliderGewicht">Gewicht auswählen (kg KG):</label><input type="range" name="sliderGewicht" id="sliderGewicht" data-highlight="true" min="0" max="40" value="20">');
-            }
+        }
         $("#gewicht").trigger("create");
     });
 
     $("#btnDosierungen").on("click", function() {
-        var gewicht = $("#sliderGewicht").length ? $("#sliderGewicht").val() : ((parseInt($("#sliderAlter").val(), 10) + 4) * 2);
+        var gewichtKg = $("#sliderGewicht").length ? parseInt($("#sliderGewicht").val(), 10) : ((parseInt($("#sliderAlter").val(), 10) + 4) * 2);
         var medItems = [];
         $.each(phasen, function(phase, medPhase) {
             medItems.push("<tr><td><i>" + phase + "</i></td><td></td><td></td></tr>");
             $.each(medPhase, function(med, medDosis) {
-                var minDosis = (! /Midazolam/.test(med)) ? (medDosis[0] * gewicht) : ((medDosis[0] * gewicht) > 7.5) ? 7.5 : (medDosis[0] * gewicht); 
-                var maxDosis = (medDosis[1] != "X") ? " - " + (medDosis[1] * gewicht).toFixed(1) : "";
-                medItems.push("<tr><td id=\"einzug\">" + med + "</td><td>" + minDosis.toFixed(1) + maxDosis + "</td><td>" + medDosis[2] + "</td></tr>");
+                switch (med) {
+                    case "Midazolam":
+                        var minDosis = ((medDosis[0] * gewichtKg) > 7.5) ? 7.5 : (medDosis[0] * gewichtKg);
+                        break;
+                    case "Flüssigkeitsbedarf":
+                        if (gewichtKg <= 10) {
+                            var minDosis = (4 * gewichtKg);
+                        } else if (gewichtKg > 10 && gewichtKg <= 20) {
+                            var minDosis = (40 + ((gewichtKg - 10) * 2));
+                        } else {
+                            var minDosis = (60 + gewichtKg - 20);
+                        }
+                        break;
+                    default:
+                        var minDosis = (medDosis[0] * gewichtKg);
+                        break;
+                }
+                var maxDosis = (medDosis[1] != "X") ? " - " + (medDosis[1] * gewichtKg).toFixed(1) : "";
+                medItems.push("<tr><td id=\"wStoff\">" + med + "</td><td id=\"wDosis\">" + minDosis.toFixed(1) + maxDosis + "</td><td id=\"wEinheit\">" + medDosis[2] + "</td></tr>");
             });
         });
         $("#tbdDosierungen").empty();
@@ -88,4 +105,3 @@ $(document).ready(function(){
         $("#tblDosierungen").table("refresh");
     });
 });
-
