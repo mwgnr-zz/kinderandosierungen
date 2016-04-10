@@ -58,16 +58,8 @@
                 <a href="#gewicht" class="ui-btn-left ui-corner-all" data-transition="slide" data-direction="reverse">Gewicht</a>
             </div>
             <div class="ui-content" role="main">
-                <table data-role="table" data-mode="columntoggle" data-column-btn-text="Spalten" class="ui-responsive" id="tblDosierungen">
-                    <thead>
-                        <tr>
-                            <th>Medikamente</th>
-                            <th>Dosierungen</th>
-                            <th data-priority="1">Einheiten</th>
-                        </tr>
-                    <tbody id="tbdDosierungen">
-                    </tbody>
-                </table>
+                <ul id="lvDosierungen" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Medikament...">
+                </ul>
             </div>
         </div>
     </body>

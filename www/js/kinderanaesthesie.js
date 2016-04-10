@@ -14,52 +14,154 @@
  * limitations under the License.
  */
 var phasen = {
-    "Praemedikation": { 
-        "Ibuprofen": [10, "X", "mg"],
-        "Midazolam": [0.4, "X", "mg"],
-        "Midazolam nasal": [0.2, "X", "mg"],
+    "Prämedikation": {
+        "Ibuprofen": {
+            c: [40, "mg/ml"],
+            minDosis: [10, "mg"],
         },
+        "Midazolam": {
+            c: [2, "mg/ml"],
+            minDosis: [0.4, "mg"],
+            stoppDosis: 8,
+        },
+        "Midazolam nasal": {
+            c: [5, "mg/ml"],
+            minDosis: [0.2, "mg"],
+        },
+    },
     "Einleitung": {
-        "Propofol": [2, 4, "mg"],
-        "Remifentanil": [0.5, "X", "µg/min"],
-        "Rocuronium": [0.6, "X", "mg"],
-        "Succinylcholin": [1.5, 2, "mg"],
-        "Sufentanil": [0.5, 1, "µg"],
+        "Propofol": {
+            c: [10, "mg/ml"],
+            minDosis: [2, "mg"],
+            maxDosis: [4, "mg"],
         },
+        "Remifentanil": {
+            c: [20, "µg/ml"],
+            minDosis: [30, "µg/h"],
+        },
+        "Rocuronium": {
+            c: [10, "mg/ml"],
+            minDosis: [0.6, "mg"],
+        },
+        "Succinylcholin": {
+            c: [20, "mg/ml"],
+            minDosis: [1.5, "mg/ml"],
+            maxDosis: [2, "mg"],
+        },
+        "Sufentanil": {
+            c: [5, "µg/ml"],
+            minDosis: [0.5, "µg"],
+            maxDosis: [1, "µg"],
+        },
+    },
     "Aufrechterhaltung": {
-        "Flüssigkeitsbedarf": ["X", "X", "ml/h"],
-        "Propofol-P": [5, 10, "mg/h"],
-        "Remifentanil-P": [0.2, 0.3, "µg/min"],
+        "Flüssigkeitsbedarf": {
+            minDosis: [null, "ml/h"],
         },
+        "Propofol-P": {
+            c: [10, "mg/ml"],
+            minDosis: [5, "mg/h"],
+            maxDosis: [10, "mg/h"],
+        },
+        "Remifentanil-P": {
+            c: [20, "µg/ml"],
+            minDosis: [12, "µg/h"],
+            maxDosis: [18, "µg/h"],
+        },
+    },
     "Antagonisierung": {
-        "Flumazenil":[0.01, "X", "mg"],
-        "Naloxon": [0.01, "X", "mg"],
-        "Neostigmin" : [0.05, "X", "mg"],
+        "Flumazenil": {
+            c: [0.1, "mg/ml"],
+            minDosis: [0.01, "mg"],
         },
+        "Naloxon": {
+            c: [0.04, "mg/ml"],
+            minDosis: [0.01, "mg"],
+        },
+        "Neostigmin" : {
+            c: [0.5, "mg/ml"],
+            minDosis: [0.05, "mg"],
+        },
+    },
     "Schmerztherapie": {
-        "Metamizol": [10, 20, "mg"],
-        "Paracetamol supp.": [40, "X", "mg"],
-        "Paracetamol i.v.": [15, "X", "mg"],
-        "Piritramid": [0.05, 0.1, "mg"],
+        "Metamizol": {
+            c: [500, "mg/ml"],
+            minDosis: [10, "mg"],
+            maxDosis: [20, "mg"],
         },
+        "Paracetamol": {
+            c: [10, "mg/ml"],
+            minDosis: [15, "mg"],
+        },
+        "Piritramid": {
+            c: [1, "mg/ml"],
+            minDosis: [0.05, "mg"],
+            maxDosis: [0.1, "mg"],
+        },
+    },
     "PONV" : {
-        "Dexamethason": [0.15, "X", "mg"],
-        "Ondansetron": [0.1, "X", "mg"],
+        "Dexamethason": {
+            c: [1, "mg/ml"],
+            minDosis: [0.15, "mg"],
+            stoppDosis: 4,
         },
+        "Ondansetron": {
+            c: [1, "mg/ml"],
+            minDosis: [0.1, "mg"],
+            stoppDosis: 4,
+        },
+    },
     "Aufwachraum-Delir": {
-        "Clonidin": [0.5, 1, "µg"],
-        "Ketamin S": [0.5, 1, "mg"],
-        "Propofol": [0.5, 1, "mg"],
+        "Clonidin": {
+            c: [15, "µg/ml"],
+            minDosis: [0.5, "µg"],
+            maxDosis: [1, "µg"],
         },
+        "Esketamin": {
+            c: [5, "mg/ml"],
+            minDosis: [0.5, "mg"],
+            maxDosis: [1, "mg"],
+        },
+        "Propofol": {
+            c: [10, "mg/ml"],
+            minDosis: [0.5, "mg"],
+            maxDosis: [1, "mg"],
+        },
+    },
     "Notfall": {
-        "Adrenalin": [0.01, "X", "mg"],
-        "Akrinor": [0.01, "X", "ml"],
-        "Amiodaron": [5, "X", "mg"],
-        "Atropin": [0.01, "X", "mg"],
-        "Noradrenalin": [0.1, "X", "µg"],
-        "Prednisolon": [10, "X", "mg"],
-        "Salbutamol": [0.1, "X", "mg"],
+        "Adrenalin": {
+            c: [0.1, "mg/ml"],
+            minDosis: [0.01, "mg"],
         },
+        "Amiodaron": {
+            c: [50, "mg/ml"],
+            minDosis: [5, "mg"],
+        },
+        "Atropin": {
+            c: [0.1, "mg/ml"],
+            minDosis: [0.01, "mg"],
+        },
+        "Noradrenalin": {
+            c: [10, "µq/ml"],
+            minDosis: [0.1, "µg"],
+        },
+        "Prednisolon": {
+            // Becke, Allergie und Anaphylaxie im Kindesalter, 2013 (1-2mg/kg)
+            // Eich, Maße & Dosierungen Kinderanästhesie, 2013 (4mg/kg)
+            c: [50, "mg/ml"],
+            minDosis: [2, "mg"],
+            maxDosis: [4, "mg"],
+        },
+        "Salbutamol p.i.": {
+            c: [0.5, "mg/ml"],
+            minDosis: [0.25, "mg"],
+            stoppDosis: 2,
+        },
+    },
+};
+
+function rmZeros(number) {
+    return Number(number.toFixed(1));
 }
 
 $(document).ready(function(){
@@ -74,34 +176,44 @@ $(document).ready(function(){
     });
 
     $("#btnDosierungen").on("click", function() {
-        var gewichtKg = $("#sliderGewicht").length ? parseInt($("#sliderGewicht").val(), 10) : ((parseInt($("#sliderAlter").val(), 10) + 4) * 2);
-        var medItems = [];
+        var gewichtKg = $("#sliderGewicht").length ? parseInt($("#sliderGewicht").val(), 10) : parseInt(($("#sliderAlter").val(), 10) + 4) * 2;
+        var medListe = [];
         $.each(phasen, function(phase, medPhase) {
-            medItems.push("<tr><td><i>" + phase + "</i></td><td></td><td></td></tr>");
+            medListe.push("<li data-role=\"list-divider\">" + phase + "</li>");
             $.each(medPhase, function(med, medDosis) {
-                switch (med) {
-                    case "Midazolam":
-                        var minDosis = ((medDosis[0] * gewichtKg) > 7.5) ? 7.5 : (medDosis[0] * gewichtKg);
-                        break;
-                    case "Flüssigkeitsbedarf":
-                        if (gewichtKg <= 10) {
-                            var minDosis = (4 * gewichtKg);
-                        } else if (gewichtKg > 10 && gewichtKg <= 20) {
-                            var minDosis = (40 + ((gewichtKg - 10) * 2));
-                        } else {
-                            var minDosis = (60 + gewichtKg - 20);
-                        }
-                        break;
-                    default:
-                        var minDosis = (medDosis[0] * gewichtKg);
-                        break;
+                if (med == "Flüssigkeitsbedarf") {
+                    if (gewichtKg <= 10) {
+                        var nDosis = rmZeros(4 * gewichtKg);
+                    } else if (gewichtKg > 10 && gewichtKg <= 20) {
+                        var nDosis = rmZeros(40 + ((gewichtKg - 10) * 2));
+                    } else {
+                        var nDosis = rmZeros(60 + gewichtKg - 20);
+                    }
+                    medListe.push("<li><h2>" + med + "</h2><p>" + nDosis + " " + medDosis.minDosis[1] + "</p></li>");
+                } else { 
+                    medListe.push("<li><h2>" + med + " (" + medDosis.c[0] + " " + medDosis.c[1] + ")</h2>");
+                    if (med == "Salbutamol p.i.") {
+                        // Dosierung pro Lebensjahr
+                        var nDosis = rmZeros(medDosis.minDosis[0] * (gewichtKg / 2 - 4));
+                    } else {
+                        var nDosis = rmZeros(medDosis.minDosis[0] * gewichtKg);
+                    }
+                    nDosis > medDosis.stoppDosis && (nDosis = medDosis.stoppDosis);
+                    var minVol = rmZeros(nDosis / medDosis.c[0]);
+                    if (medDosis.maxDosis !== undefined) {
+                        var hDosis = rmZeros(medDosis.maxDosis[0] * gewichtKg);
+                        var maxVol = rmZeros(hDosis / medDosis.c[0]);
+                    } 
+                    hDosis !== undefined ? medListe.push("<p>" + nDosis + " - " + hDosis) : medListe.push("<p>" + nDosis);
+                    medListe.push(" " + medDosis.minDosis[1]);
+                    maxVol !== undefined ? medListe.push(" ≃ " + minVol + " - " + maxVol) :  medListe.push(" ≃ " + minVol);
+                    medListe.push(" " + medDosis.c[1].split('/')[1]); 
+                    medDosis.minDosis[1].indexOf("g/h") > -1 ?  medListe.push("/h</p></li>") : medListe.push("</p></li>");
                 }
-                var maxDosis = (medDosis[1] != "X") ? " - " + (medDosis[1] * gewichtKg).toFixed(1) : "";
-                medItems.push("<tr><td id=\"wStoff\">" + med + "</td><td id=\"wDosis\">" + minDosis.toFixed(1) + maxDosis + "</td><td id=\"wEinheit\">" + medDosis[2] + "</td></tr>");
             });
         });
-        $("#tbdDosierungen").empty();
-        $("#tbdDosierungen").append(medItems.join(""));
-        $("#tblDosierungen").table("refresh");
+        $("#lvDosierungen").empty();
+        $("#lvDosierungen").append(medListe.join(""));
+        $("#lvDosierungen").listview("refresh");
     });
 });
