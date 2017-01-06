@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Michael Wagner
+ * Copyright 2017 Michael Wagner
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ var phasen = {
         },
         "Succinylcholin": {
             c: [20, "mg/ml"],
-            minDosis: [1.5, "mg/ml"],
+            minDosis: [1.5, "mg"],
             maxDosis: [2, "mg"],
         },
         "Sufentanil": {
@@ -56,7 +56,9 @@ var phasen = {
     },
     "Aufrechterhaltung": {
         "Flüssigkeitsbedarf": {
-            minDosis: [null, "ml/h"],
+            // S1-Leitlinie Perioperative Infusionstherapie bei Kindern, 2016
+            c: ["", ""],
+            minDosis: [10, "ml/h"],
         },
         "Propofol-P": {
             c: [10, "mg/ml"],
@@ -112,10 +114,12 @@ var phasen = {
         },
     },
     "Aufwachraum-Delir": {
+        // S2e-Leitlinie Prävention und Therapie des pädiatrischen Emergence
+        // Delir, 2016
         "Clonidin": {
             c: [15, "µg/ml"],
-            minDosis: [0.5, "µg"],
-            maxDosis: [1, "µg"],
+            minDosis: [1, "µg"],
+            maxDosis: [2, "µg"],
         },
         "Esketamin": {
             c: [5, "mg/ml"],
@@ -146,6 +150,8 @@ var phasen = {
             minDosis: [0.1, "µg"],
         },
         "Prednisolon": {
+            // S2k-Leitlinie Leitlinie zu Akuttherapie und Management der Anaphylaxie, 2014
+            //   (<15kg: 50 mg, 15-30kg: 100 mg, 31-60kg: 250 mg)
             // Becke, Allergie und Anaphylaxie im Kindesalter, 2013 (1-2mg/kg)
             // Eich, Maße & Dosierungen Kinderanästhesie, 2013 (4mg/kg)
             c: [50, "mg/ml"],
@@ -181,23 +187,16 @@ $(document).ready(function(){
         $.each(phasen, function(phase, medPhase) {
             medListe.push("<li data-role=\"list-divider\">" + phase + "</li>");
             $.each(medPhase, function(med, medDosis) {
+                if (med == "Salbutamol p.i.") {
+                    // Dosierung pro Lebensjahr
+                    var nDosis = rmZeros(medDosis.minDosis[0] * (gewichtKg / 2 - 4));
+                } else {
+                    var nDosis = rmZeros(medDosis.minDosis[0] * gewichtKg);
+                }
                 if (med == "Flüssigkeitsbedarf") {
-                    if (gewichtKg <= 10) {
-                        var nDosis = rmZeros(4 * gewichtKg);
-                    } else if (gewichtKg > 10 && gewichtKg <= 20) {
-                        var nDosis = rmZeros(40 + ((gewichtKg - 10) * 2));
-                    } else {
-                        var nDosis = rmZeros(60 + gewichtKg - 20);
-                    }
                     medListe.push("<li><h2>" + med + "</h2><p>" + nDosis + " " + medDosis.minDosis[1] + "</p></li>");
-                } else { 
+                } else {
                     medListe.push("<li><h2>" + med + " (" + medDosis.c[0] + " " + medDosis.c[1] + ")</h2>");
-                    if (med == "Salbutamol p.i.") {
-                        // Dosierung pro Lebensjahr
-                        var nDosis = rmZeros(medDosis.minDosis[0] * (gewichtKg / 2 - 4));
-                    } else {
-                        var nDosis = rmZeros(medDosis.minDosis[0] * gewichtKg);
-                    }
                     nDosis > medDosis.stoppDosis && (nDosis = medDosis.stoppDosis);
                     var minVol = rmZeros(nDosis / medDosis.c[0]);
                     if (medDosis.maxDosis !== undefined) {
