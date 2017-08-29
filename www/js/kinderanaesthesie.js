@@ -39,6 +39,11 @@ var phasen = {
             c: [20, "µg/ml"],
             minDosis: [30, "µg/h"],
         },
+        "Sufentanil": {
+            c: [5, "µg/ml"],
+            minDosis: [0.5, "µg"],
+            maxDosis: [1, "µg"],
+        },
         "Rocuronium": {
             c: [10, "mg/ml"],
             minDosis: [0.6, "mg"],
@@ -48,12 +53,7 @@ var phasen = {
             minDosis: [1.5, "mg"],
             maxDosis: [2, "mg"],
         },
-        "Sufentanil": {
-            c: [5, "µg/ml"],
-            minDosis: [0.5, "µg"],
-            maxDosis: [1, "µg"],
-        },
-    },
+},
     "Aufrechterhaltung": {
         "Flüssigkeitsbedarf": {
             // S1-Leitlinie Perioperative Infusionstherapie bei Kindern, 2016
@@ -137,6 +137,11 @@ var phasen = {
             c: [0.1, "mg/ml"],
             minDosis: [0.01, "mg"],
         },
+        "Adrenalin p. i.": {
+            c: [1, "mg/ml"],
+            minDosis: [0.5, "mg"],
+            stoppDosis: 5,
+        },
         "Amiodaron": {
             c: [50, "mg/ml"],
             minDosis: [5, "mg"],
@@ -144,6 +149,7 @@ var phasen = {
         "Atropin": {
             c: [0.1, "mg/ml"],
             minDosis: [0.01, "mg"],
+            maxDosis: [0.02, "mg"],
         },
         "Noradrenalin": {
             c: [10, "µq/ml"],
@@ -166,53 +172,60 @@ var phasen = {
     },
 };
 
-function rmZeros(number) {
-    return Number(number.toFixed(1));
-}
+function runden(number) {
+    return number.toFixed(1);
+};
 
-$(document).ready(function(){
-    $("#flipGewicht").on("change", function() {
-        $("#formGewicht").empty();
-        if ($("#flipGewicht").val() == "alter") {
-            $("#formGewicht").append('<label for="sliderAlter">Gewicht berechnen (Alter in Jahren):</label><input type="range" name="sliderAlter" id="sliderAlter" data-highlight="true" min="1" max="10" value="6">');
-        } else {
-            $("#formGewicht").append('<label for="sliderGewicht">Gewicht auswählen (kg KG):</label><input type="range" name="sliderGewicht" id="sliderGewicht" data-highlight="true" min="0" max="40" value="20">');
-        }
-        $("#gewicht").trigger("create");
-    });
-
-    $("#btnDosierungen").on("click", function() {
-        var gewichtKg = $("#sliderGewicht").length ? parseInt($("#sliderGewicht").val(), 10) : parseInt(($("#sliderAlter").val(), 10) + 4) * 2;
-        var medListe = [];
-        $.each(phasen, function(phase, medPhase) {
-            medListe.push("<li data-role=\"list-divider\">" + phase + "</li>");
-            $.each(medPhase, function(med, medDosis) {
-                if (med == "Salbutamol p.i.") {
-                    // Dosierung pro Lebensjahr
-                    var nDosis = rmZeros(medDosis.minDosis[0] * (gewichtKg / 2 - 4));
-                } else {
-                    var nDosis = rmZeros(medDosis.minDosis[0] * gewichtKg);
-                }
-                if (med == "Flüssigkeitsbedarf") {
-                    medListe.push("<li><h2>" + med + "</h2><p>" + nDosis + " " + medDosis.minDosis[1] + "</p></li>");
-                } else {
-                    medListe.push("<li><h2>" + med + " (" + medDosis.c[0] + " " + medDosis.c[1] + ")</h2>");
-                    nDosis > medDosis.stoppDosis && (nDosis = medDosis.stoppDosis);
-                    var minVol = rmZeros(nDosis / medDosis.c[0]);
-                    if (medDosis.maxDosis !== undefined) {
-                        var hDosis = rmZeros(medDosis.maxDosis[0] * gewichtKg);
-                        var maxVol = rmZeros(hDosis / medDosis.c[0]);
-                    } 
-                    hDosis !== undefined ? medListe.push("<p>" + nDosis + " - " + hDosis) : medListe.push("<p>" + nDosis);
-                    medListe.push(" " + medDosis.minDosis[1]);
-                    maxVol !== undefined ? medListe.push(" ≃ " + minVol + " - " + maxVol) :  medListe.push(" ≃ " + minVol);
-                    medListe.push(" " + medDosis.c[1].split('/')[1]); 
-                    medDosis.minDosis[1].indexOf("g/h") > -1 ?  medListe.push("/h</p></li>") : medListe.push("</p></li>");
-                }
-            });
+function dosierungenBerechnen(gewichtKg) {
+    var medListe = [];
+    $.each(phasen, function(phase, medPhase) {
+        medListe.push("<li data-role=\"list-divider\">" + phase + "</li>");
+        $.each(medPhase, function(med, medDosis) {
+            if (med == "Salbutamol p.i.") {
+                // Dosierung pro Lebensjahr
+                var nDosis = runden(medDosis.minDosis[0] * (gewichtKg / 2 - 4));
+            } else {
+                var nDosis = runden(medDosis.minDosis[0] * gewichtKg);
+            }
+            if (med == "Flüssigkeitsbedarf") {
+                medListe.push("<li><h2>" + med + "</h2><p>" + nDosis + " " + medDosis.minDosis[1] + "</p></li>");
+            } else {
+                medListe.push("<li><h2>" + med + " (" + medDosis.c[0] + " " + medDosis.c[1] + ")</h2>");
+                nDosis > medDosis.stoppDosis && (nDosis = medDosis.stoppDosis);
+                var minVol = runden(nDosis / medDosis.c[0]);
+                if (medDosis.maxDosis !== undefined) {
+                    var hDosis = runden(medDosis.maxDosis[0] * gewichtKg);
+                    var maxVol = runden(hDosis / medDosis.c[0]);
+                } 
+                hDosis !== undefined ? medListe.push("<p>" + nDosis + " - " + hDosis) : medListe.push("<p>" + nDosis);
+                medListe.push(" " + medDosis.minDosis[1]);
+                maxVol !== undefined ? medListe.push(" ≃ " + minVol + " - " + maxVol) :  medListe.push(" ≃ " + minVol);
+                medListe.push(" " + medDosis.c[1].split('/')[1]); 
+                medDosis.minDosis[1].indexOf("g/h") > -1 ?  medListe.push("/h</p></li>") : medListe.push("</p></li>");
+            }
         });
-        $("#lvDosierungen").empty();
-        $("#lvDosierungen").append(medListe.join(""));
-        $("#lvDosierungen").listview("refresh");
+    });
+    $("#lvDosierungen").empty();
+    $("#lvDosierungen").append(medListe.join(""));
+    $("#lvDosierungen").listview("refresh");
+}; 
+
+$(document).on("pagecreate", function () {
+    $("#tabs").on("tabscreate tabsactivate", function () {
+        if ($(this).tabs("option", "active") == 0) {
+            var gewichtKg = parseInt($("#sliderGewicht").val(), 10);
+        } else {
+            var gewichtKg = (parseInt($("#sliderAlter").val(), 10) + 4) * 2;
+        }
+        dosierungenBerechnen(gewichtKg);
+    });
+    $("#tabs").tabs();
+    $("#sliderGewicht, #sliderAlter").on("slidestop", function() {
+        if ($(this).attr("name") == "sliderGewicht") {
+            var gewichtKg = parseInt($(this).val(), 10);
+        } else {
+            var gewichtKg = (parseInt($("#sliderAlter").val(), 10) + 4) * 2;
+        }
+        dosierungenBerechnen(gewichtKg);
     });
 });

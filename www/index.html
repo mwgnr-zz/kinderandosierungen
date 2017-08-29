@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Copyright 2016 Michael Wagner
+  Copyright 2017 Michael Wagner
   
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -32,34 +32,36 @@
     <body>
         <div data-role="page" id="gewicht">
             <div data-role="header">
-                <h1>Gewicht auswählen</h1>
+                <h1>KinderAN Dosierungen</h1>
             </div>
             <div class="ui-content" role="main">
-                <form>
-                    <label for="flipGewicht">Gewicht bekannt:</label>
-                    <select name="flipGewicht" id="flipGewicht" data-role="flipswitch">
-                        <option value="alter">Nein</option>
-                        <option selected="" value="gewicht">Ja</option>
-                    </select>
-                </form>
-                <form id="formGewicht">
-                    <label for="sliderGewicht">Gewicht auswählen (kg KG):</label>
-                    <input type="range" name="sliderGewicht" id="sliderGewicht" data-highlight="true" min="0" max="40" value="20">
-                </form>
-                <a href="#dosierungen" class="ui-btn ui-corner-all" data-transition="slide" id="btnDosierungen">Dosierungen</a>
-                <p id="ausschluss">Der Autor übernimmt keine Verantwortung und keine daraus folgende oder sonstige Haftung,
-                    die auf irgendeine Art aus der Benutzung der enthaltenen Informationen entsteht.
+                <div id="tabs">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#tabGewicht" class="ui-btn-active ui-state-persist">Gewicht</a></li>
+                            <li><a href="#tabAlter">Alter</a></li>
+                        </ul>
+                    </div>
+                    <div class="ui-body-d ui-content" id="tabGewicht">
+                        <form id="formGewicht">
+                            <label for="sliderGewicht">Gewicht auswählen (kg KG):</label>
+                            <input type="range" name="sliderGewicht" id="sliderGewicht" data-highlight="true" min="0" max="40" value="20">
+                        </form>
+                    </div>
+                    <div class="ui-body-d ui-content" id="tabAlter">
+                        <form id="formAlter">
+                            <label for="sliderAlter">Gewicht berechnen (Alter in Jahren):</label>
+                            <input type="range" name="sliderAlter" id="sliderAlter" data-highlight="true" min="1" max="10" value="6">
+                        </form>
+                    </div>
+                </div>
+                <div id="dosierungen">
+                    <ul id="lvDosierungen" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Medikament..."></ul>
+                </div>
+            </div>
+            <div data-role="footer">
+                <p id="ausschluss">Diese App ist kein Medizinprodukt und darf nicht für die Therapie, sondern ausschließlich für die ärztliche Ausbildung verwendet werden. <br> Der Autor übernimmt keine Verantwortung und keine daraus folgende oder sonstige Haftung, die auf irgendeine Art aus der Benutzung der enthaltenen Informationen entsteht.
                 </p>
-            </div>
-        </div>
-        <div data-role="page" id="dosierungen">
-            <div data-role="header">
-                <h1>Dosierungen</h1>
-                <a href="#gewicht" class="ui-btn-left ui-corner-all" data-transition="slide" data-direction="reverse">Gewicht</a>
-            </div>
-            <div class="ui-content" role="main">
-                <ul id="lvDosierungen" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Medikament...">
-                </ul>
             </div>
         </div>
     </body>

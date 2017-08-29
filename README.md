@@ -10,6 +10,8 @@ bzw. den Angaben der jeweiligen Fachinformation. Bei Interesse kann
 man sie der Datei [kinderanaesthesie.js](www/js/kinderanaesthesie.js)
 entnehmen.
 
+Diese App ist kein Medizinprodukt und darf nicht für die Therapie,
+sondern ausschließlich für die ärztliche Ausbildung verwendet werden.
 Der Autor übernimmt keine Verantwortung und keine daraus folgende oder
 sonstige Haftung, die auf irgendeine Art aus der Benutzung der
 enthaltenen Informationen entsteht.
