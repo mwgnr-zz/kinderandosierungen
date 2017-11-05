@@ -173,7 +173,7 @@ var phasen = {
 };
 
 function runden(number) {
-    return number.toFixed(1);
+    return parseFloat(number.toFixed(1));
 };
 
 function dosierungenBerechnen(gewichtKg) {
