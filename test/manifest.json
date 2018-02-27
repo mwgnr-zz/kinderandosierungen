@@ -1,0 +1,7 @@
+{
+  "name": "kinderandosierungen",
+  "short_name": "kinderandosierungen",
+  "description": "Berechnung von Medikamentendosierungen für eine Anaesthesie bei Kindern",
+  "start_url": "/",
+  "display": "standalone"
+}

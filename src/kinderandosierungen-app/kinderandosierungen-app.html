@@ -1,0 +1,135 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+
+<dom-module id="kinderandosierungen-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      app-toolbar,
+      paper-tabs {
+        background-color: #4285f4;
+        color: white;
+      }
+      paper-tabs {
+        --paper-tabs-selection-bar-color: white;
+        margin-bottom: 20px;
+      }
+      iron-pages {
+        margin: 0px 10px;
+      }
+      .group-header,
+      .group-item {
+        background-color: white;
+        padding: 10px;
+      }
+      .secondary {
+        color: grey;
+      }
+      .group-header {
+        border-bottom: 1px solid #ddd;
+        color: #333;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      footer {
+        background-color: #4285f4;
+        color: white;
+        font-size: 0.7em;
+        margin-top: 20px;
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+    <app-toolbar>
+      <div main-title>KinderAN Dosierungen</div>
+      <paper-icon-button on-click="_openDialog" icon="info"></paper-icon-button>
+      <paper-dialog id="impressum" with-backdrop>
+        <h2>Impressum</h2>
+        <div>Dr. Michael Wagner<br>Schillerstr. 56<br>22880 Wedel<br>04103 9639878<br>dev@mwagner.org</div>
+      </paper-dialog>
+    </app-toolbar>
+    <iron-ajax auto url="data/drugs.json" last-response="{{drugs}}"></iron-ajax>
+    <paper-tabs selected="{{selected}}">
+      <paper-tab>Gewicht</paper-tab>
+      <paper-tab>Alter</paper-tab>
+    </paper-tabs>
+    <iron-pages selected="{{selected}}">
+      <div>
+        <div>Gewicht auswählen (kg KG):</div>
+        <paper-slider editable min="1" max="40" value="{{weight}}"></paper-slider>
+        <template is="dom-repeat" items="[[drugs]]" as="drug">
+          <div class="group-header" hidden$="[[!_isHeader(drugs, index)]]">[[drug.phase]]</div>
+          <div class="group-item">
+            <div>[[drug.name]] ([[drug.unit]])</div>
+            <div class="secondary">[[_calcDose(drug, "l", weight, -3.5)]]<span hidden$="[[!drug.hDose]]"> - [[_calcDose(drug, "h", weight, -3.5)]]</span></div>
+          </div>
+        </template>
+      </div>
+      <div>
+        <div>Alter auswählen (Jahre):</div>
+        <paper-slider editable min="1" max="10" value="{{age}}"></paper-slider>
+        <template is="dom-repeat" items="[[drugs]]" as="drug">
+          <div class="group-header" hidden$="[[!_isHeader(drugs, index)]]">[[drug.phase]]</div>
+          <div class="group-item">
+            <div>[[drug.name]] ([[drug.unit]])</div>
+            <div class="secondary">[[_calcDose(drug, "l", 1, age)]]<span hidden$="[[!drug.hDose]]"> - [[_calcDose(drug, "h", 1, age)]]</span></div>
+          </div>
+        </template>
+      </div>
+    </iron-pages>
+    <footer>
+      Diese App ist kein Medizinprodukt und darf nicht für die Therapie, sondern ausschließlich für die ärztliche Ausbildung verwendet werden. Der Autor übernimmt keine Verantwortung und keine daraus folgende oder sonstige Haftung, die auf irgendeine Art aus der Benutzung der enthaltenen Informationen entsteht.
+    </footer>
+  </template>
+
+  <script>
+    class KinderandosierungenApp extends Polymer.Element {
+      static get is() { return 'kinderandosierungen-app'; }
+      static get properties() {
+         return {
+          selected: {
+            type: Number,
+            value: 0
+          },
+          weight: {
+            type: Number,
+            value: 20
+          },
+          age: {
+            type: Number,
+            value: 6
+          }
+        }
+      }
+      _openDialog() {
+        this.$.impressum.open();
+      }
+      _calcDose(drug, lh, weight, age) {
+        // Age: (-3.5 + 4) * 2 = 1 
+        var lDose, hDose;
+        if (lh == "l") {
+          lDose = drug.lDose * weight * (age + 4) * 2;
+          lDose > drug.stopDose && (lDose = drug.stopDose);
+          return parseFloat(lDose.toFixed(1));
+        } else if (lh == "h") {
+          hDose = drug.hDose * weight * (age + 4) * 2;
+          hDose > drug.stopDose && (hDose = drug.stopDose);
+          return parseFloat(hDose.toFixed(1));
+        }
+      }
+      _isHeader(drugs, index) {
+        return (index == 0 || drugs[index].phase != drugs[index-1].phase) ? true: false;
+      }
+    }
+    window.customElements.define(KinderandosierungenApp.is, KinderandosierungenApp);
+  </script>
+</dom-module>

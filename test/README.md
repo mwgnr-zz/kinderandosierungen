@@ -13,9 +13,7 @@ anhand der APLS-Formel ([Alter + 4] x 2) geschätzt werden.
 Die Dosierungsempfehlungen entsprechen der aktuellen Fachliteratur bzw. den
 Angaben der jeweiligen Fachinformation.
 
-Der Quellcode dieser App steht unter der MIT-Lizenz und wurde auf GitHub
-veröffentlicht. Sie verwendet die Javascript-Bibliothek
-["Polymer"](https://www.polymer-project.org). Das Logo basiert auf
+Das Logo basiert auf
 ["calculator"](https://www.flickr.com/photos/ansik/304526237) von
 ["ansik"](https://www.flickr.com/photos/ansik), veröffentlich unter ["CC BY
 2.0"](http://creativecommons.org/licenses/by/2.0/).

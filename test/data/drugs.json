@@ -1,0 +1,188 @@
+[
+      {
+        "lDose": 10,
+        "name": "Ibuprofen",
+        "phase": "Prämedikation",
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.4,
+        "name": "Midazolam",
+        "phase": "Prämedikation",
+        "stopDose": 8,
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.2,
+        "name": "Midazolam nasal",
+        "phase": "Prämedikation",
+        "unit": "mg"
+    },
+    {
+        "hDose": 4,
+        "lDose": 2,
+        "name": "Propofol",
+        "phase": "Einleitung",
+        "unit": "mg"
+    },
+    {
+        "lDose": 30,
+        "name": "Remifentanil",
+        "phase": "Einleitung",
+        "unit": "µg/h"
+    },
+    {
+        "hDose": 1,
+        "lDose": 0.5,
+        "name": "Sufentanil",
+        "phase": "Einleitung",
+        "unit": "µg"
+    },
+    {
+        "lDose": 0.6,
+        "name": "Rocuronium",
+        "phase": "Einleitung",
+        "unit": "mg"
+    },
+    {
+        "hDose": 2,
+        "lDose": 1.5,
+        "name": "Succinylcholin",
+        "phase": "Einleitung",
+        "unit": "mg"
+    },
+    {
+        "hDose": 10,
+        "lDose": 5,
+        "name": "Propofol-P",
+        "phase": "Aufrechterhaltung",
+        "unit": "mg/h"
+    },
+    {
+        "hDose": 18,
+        "lDose": 12,
+        "name": "Remifentanil-P",
+        "phase": "Aufrechterhaltung",
+        "unit": "µg/h"
+    },
+    {
+        "lDose": 0.01,
+        "name": "Flumazenil",
+        "phase": "Antagonisierung",
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.01,
+        "name": "Naloxon",
+        "phase": "Antagonisierung",
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.05,
+        "name": "Neostigmin",
+        "phase": "Antagonisierung",
+        "unit": "mg"
+    },
+    {
+        "hDose": 20,
+        "lDose": 10,
+        "name": "Metamizol",
+        "phase": "Schmerztherapie",
+        "unit": "mg"
+    },
+    {
+        "lDose": 15,
+        "name": "Paracetamol",
+        "phase": "Schmerztherapie",
+        "unit": "mg"
+    },
+    {
+        "hDose": 0.1,
+        "lDose": 0.05,
+        "name": "Piritramid",
+        "phase": "Schmerztherapie",
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.15,
+        "name": "Dexamethason",
+        "phase": "PONV",
+        "stopDose": 4,
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.1,
+        "name": "Ondansetron",
+        "phase": "PONV",
+        "stopDose": 4,
+        "unit": "mg"
+    },
+    {
+        "hDose": 2,
+        "lDose": 1,
+        "name": "Clonidin",
+        "phase": "Aufwachraum-Delir",
+        "unit": "µg"
+    },
+    {
+        "hDose": 1,
+        "lDose": 0.5,
+        "name": "Esketamin",
+        "phase": "Aufwachraum-Delir",
+        "unit": "mg"
+    },
+    {
+        "hDose": 1,
+        "lDose": 0.5,
+        "name": "Propofol",
+        "phase": "Aufwachraum-Delir",
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.01,
+        "name": "Adrenalin [CPR]",
+        "phase": "Notfall",
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.5,
+        "name": "Adrenalin p. i.",
+        "phase": "Notfall",
+        "stopDose": 5,
+        "unit": "mg"
+    },
+    {
+        "lDose": 5,
+        "name": "Amiodaron",
+        "phase": "Notfall",
+        "unit": "mg"
+    },
+    {
+        "hDose": 0.02,
+        "lDose": 0.01,
+        "name": "Atropin",
+        "phase": "Notfall",
+        "unit": "mg"
+    },
+    {
+        "lDose": 0.1,
+        "name": "Noradrenalin",
+        "phase": "Notfall",
+        "unit": "µg"
+    },
+    {
+        "hDose": 4,
+        "lDose": 2,
+        "name": "Prednisolon",
+        "phase": "Notfall",
+        "unit": "mg"
+    },
+    {
+        "hDose": 0.15,
+        "lDose": 0.05,
+        "name": "Salbutamol p.i.",
+        "phase": "Notfall",
+        "stopDose": 2.5,
+        "unit": "mg"
+    }
+]
